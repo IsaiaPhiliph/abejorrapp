@@ -1,0 +1,64 @@
+{
+    "en": {
+      "translation": {
+        "Welcome to React": "Welcome to React and react-i18next",
+        "login": "Log in",
+        "home":"Home",
+        "emailAddress":"Email address",
+        "password":"Password",
+        "rememberMe":"Remember me",
+        "forgotPassword":"Forgot your password?",
+        "dontHaveAccount":"Don't have an account?",
+        "alreadyHaveAccount":"Already have an account? Sign in",
+        "firstName":"First Name",
+        "lastName":"Last Name",
+        "signup":"Sign up",
+        "logOut":"Log out",
+        "signUpError":"Ups, there was an error while signing up",
+        "loginError":"Ups, there was an error while loging in",
+        "username":"Username",
+        "gameName":"Game name",
+        "newGame":"Create game",
+        "next":"Next",
+        "addFriend":"Add Friend",
+        "pickAUser":"Pick a user",
+        "myProfile": "My Profile",
+        "myAccount":"My Account",
+        "notificationAddMsg":"You have a new friend request from ",
+        "noNotifications":"You don't have any notification",
+        "selectFriends":"Choose participants",
+        "games":"Games"
+
+      }
+    },
+    "es": {
+      "translation": {
+        "login": "Iniciar sesión",
+        "home":"Inicio",
+        "emailAddress":"Correo electrónico",
+        "password":"Contraseña",
+        "rememberMe":"Recuérdame",
+        "forgotPassword":"Olvidaste tu contraseña?",
+        "dontHaveAccount":"No tienes cuenta?",
+        "alreadyHaveAccount":"Ya tienes una cuenta?",
+        "firstName":"Nombre",
+        "lastName":"Apellido",
+        "signup":"Registrarse",
+        "logOut":"Cerrar sesión",
+        "signUpError":"Ups, hubo un error al crear la cuenta, revisa los datos introducidos!",
+        "loginError":"Ups, hubo un error al iniciar sesión, revisa los datos introducidos!",
+        "username":"Nombre de usuario",
+        "gameName":"Nombre del juego",
+        "newGame":"Crear juego",
+        "next":"Siguiente",
+        "addFriend":"Añadir amigo",
+        "pickAUser":"Selecciona un usuario",
+        "myProfile": "Mi Perfil",
+        "myAccount":"Mi Cuenta",
+        "notificationAddMsg":"Tienes una nueva solicitud de amistad de ",
+        "noNotifications":"No tienes ninguna notificación",
+        "selectFriends":"Elige los participantes",
+        "games":"Partidas"
+      }
+    }
+  }
