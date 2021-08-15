@@ -18,6 +18,7 @@
     "@types/react-router-dom": "^5.1.8",
     "firebase": "9.0.0-beta.7",
     "i18next": "^20.4.0",
+    "prettier": "^2.3.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-i18next": "^11.11.4",
@@ -29,7 +30,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "buildAndTest":"react-scripts build && serve -s build -p 6000",
+    "buildAndTest": "react-scripts build && serve -s build -p 6000",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

@@ -5,14 +5,8 @@ import { RootState } from "../../app/store";
 export interface Game extends DocumentData {
   name: string;
   status: 0;
-  rounds: {
-    round_num: number;
-    points: {
-      points: number;
-      user: string;
-    }[];
-  }[];
-  players: string[];
+  players: { id: string; username: string }[];
+  rounds?: { id: string; data: { [key: string]: number } }[];
 }
 
 export interface Games {
@@ -37,10 +31,16 @@ export const gamesSlice = createSlice({
     ) => {
       state.games = action.payload;
     },
+    setRounds: (state, action) => {
+      const gameIndex = state.games.findIndex(
+        (game) => game.id === action.payload.gameId
+      );
+      state.games[gameIndex].data.rounds = action.payload.rounds;
+    },
   },
 });
 
-export const { setGames } = gamesSlice.actions;
+export const { setGames, setRounds } = gamesSlice.actions;
 
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of

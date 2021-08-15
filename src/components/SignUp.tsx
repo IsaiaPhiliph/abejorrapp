@@ -14,6 +14,8 @@ import { Link as RLink } from "react-router-dom";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db } from "../firebase";
 import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import { useDispatch } from "react-redux";
+import { setCurrentUser } from "../features/auth/authSlice";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -37,6 +39,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function SignUp() {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const { t } = useTranslation();
 
   const [signUpInfo, setSignUpInfo] = useState({
@@ -63,20 +66,27 @@ export default function SignUp() {
     createUserWithEmailAndPassword(auth, signUpInfo.email, signUpInfo.password)
       .then((userCredential) => {
         const user = userCredential.user;
-        if (!user.displayName) {
-          updateProfile(user, {
-            displayName: signUpInfo.username,
-          }).catch((err) => console.error(err));
-          //TODO Notify user that it was not possible to update his display name
-        }
-
-        if (user.email) {
-          setDoc(doc(db, "users", user.email), {
-            email: user.email,
-            photoUrl: user.photoURL,
-            displayName: signUpInfo.username,
-          }).catch((err) => console.error(err));
-        }
+        updateProfile(user, {
+          displayName: signUpInfo.username,
+        })
+          .then(() => {
+            if (user.email) {
+              setDoc(doc(db, "users", signUpInfo.username), {
+                email: user.email,
+                photoUrl: user.photoURL,
+                displayName: signUpInfo.username,
+              }).catch((err) => console.error(err));
+            }
+            dispatch(
+              setCurrentUser({
+                email: user.email,
+                displayName: signUpInfo.username,
+                uid: signUpInfo.username,
+              })
+            );
+          })
+          .catch((err) => console.error(err));
+        //TODO Notify user that it was not possible to update his display name
       })
       .catch((error) => {
         console.error(error);
@@ -97,7 +107,6 @@ export default function SignUp() {
         </Typography>
         <form
           className={classes.form}
-          noValidate
           onSubmit={(e) => {
             e.preventDefault();
             handleFormSubmit();

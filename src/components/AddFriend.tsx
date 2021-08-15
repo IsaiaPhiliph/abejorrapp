@@ -39,7 +39,9 @@ export default function AddFriend() {
   const users = useAppSelector(selectUsers);
   const currentUser = useAppSelector(selectCurrentUser);
   const options = users
-    .filter((user) => user.id !== currentUser?.email && user.data.displayName)
+    .filter(
+      (user) => user.id !== currentUser?.displayName && user.data.displayName
+    )
     .map((user) => ({
       label: user.data.displayName,
       value: user.id,
@@ -68,12 +70,12 @@ export default function AddFriend() {
                   );
                   const notificationDoc = doc(
                     userNotifications,
-                    currentUser.email + "-add"
+                    currentUser.displayName + "-add"
                   );
 
                   await setDoc(notificationDoc, {
                     type: "add",
-                    from: currentUser.email,
+                    from: currentUser.displayName,
                   });
                 } catch (err) {
                   console.error(err);

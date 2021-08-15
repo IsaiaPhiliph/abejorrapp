@@ -21,24 +21,25 @@ export default function Home() {
     <div>
       <AbAppBar />
       <AbAppDrawer />
-
-      <Switch>
-        <Route path="/add-friend">
-          <AddFriendScreen />
-        </Route>
-        <Route path={`/new-game`}>
-          <NewGame />
-        </Route>
-        <Route exact path={"/games"}>
-          <GamesScreen />
-        </Route>
-        <Route path="/game/:id">
-          <SingleGame />
-        </Route>
-        <Route exact path={"/"}>
-          <HomeScreen />
-        </Route>
-      </Switch>
+      <div style={{ paddingTop: "3.5rem" }}>
+        <Switch>
+          <Route path="/add-friend">
+            <AddFriendScreen />
+          </Route>
+          <Route path={`/new-game`}>
+            <NewGame />
+          </Route>
+          <Route exact path={"/games"}>
+            <GamesScreen />
+          </Route>
+          <Route path="/game/:id">
+            <SingleGame />
+          </Route>
+          <Route exact path={"/"}>
+            <HomeScreen />
+          </Route>
+        </Switch>
+      </div>
     </div>
   );
 }

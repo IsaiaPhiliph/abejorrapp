@@ -4,6 +4,7 @@ import { RootState } from "../../app/store";
 
 export interface Friend extends DocumentData {
   id: string;
+  username:string
 }
 
 export interface Friends {

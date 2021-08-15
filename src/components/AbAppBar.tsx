@@ -90,11 +90,11 @@ export default function AbAppBar() {
     setAnchorElNot(null);
   };
   const handleAcceptFriend = async (userId: string) => {
-    if (currentUser?.email) {
-      const myDoc = doc(db, "users", currentUser.email);
+    if (currentUser?.displayName) {
+      const myDoc = doc(db, "users", currentUser.displayName);
       const userDoc = doc(db, "users", userId);
       const notificationDoc = doc(
-        collection(doc(db, "users", currentUser.email), "notifications"),
+        collection(doc(db, "users", currentUser.displayName), "notifications"),
         userId + "-add"
       );
       const myFriendCollection = collection(myDoc, "friends");
@@ -104,7 +104,7 @@ export default function AbAppBar() {
         await setDoc(doc(myFriendCollection, userId), {
           createdAt: new Date().toDateString(),
         });
-        await setDoc(doc(userFriendCollection, currentUser.email), {
+        await setDoc(doc(userFriendCollection, currentUser.displayName), {
           createdAt: new Date().toDateString(),
         });
       } catch (err) {
@@ -179,7 +179,7 @@ export default function AbAppBar() {
 
   return (
     <div>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <IconButton
             edge="start"

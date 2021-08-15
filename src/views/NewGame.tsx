@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { Autocomplete } from "@material-ui/lab";
 import { useAppSelector } from "../app/hooks";
 import { selectFriends } from "../features/friends/friendsSlice";
-import { collection, doc, setDoc } from "firebase/firestore";
+import { collection, doc, setDoc, addDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { selectCurrentUser } from "../features/auth/authSlice";
 
@@ -46,39 +46,52 @@ export default function NewGame() {
       return already;
     })
     .map((friend) => ({
-      value: friend.id,
-      label: friend.id,
+      value: friend.data.username,
+      label: friend.data.username,
     }));
-  const handleCreateGame: React.MouseEventHandler<HTMLButtonElement> = (e) => {
+  const handleCreateGame: React.MouseEventHandler<HTMLButtonElement> = async (
+    e
+  ) => {
     e.preventDefault();
     if (currentUser) {
       const newSelectedFriends = [...selectedFriends];
       newSelectedFriends.push({
-        value: currentUser.email!,
-        label: currentUser.email!,
+        value: currentUser.displayName!,
+        label: currentUser.displayName!,
       });
       console.log(newSelectedFriends);
-      newSelectedFriends.forEach((selectedFriend) => {
-        const friendGames = collection(
-          doc(db, "users", selectedFriend.value),
-          "games"
-        );
-        try {
-          setDoc(doc(friendGames), {
-            name,
-            players: newSelectedFriends.map((friend) => friend.value),
-            rounds: newSelectedFriends.map((friend, index) => ({
-              round_num: index + 1,
-              points: newSelectedFriends.map((friend) => ({
-                user: friend.value,
-                points: 0,
-              })),
-            })),
-          });
-        } catch (err) {
-          console.error(err);
-        }
-      });
+      try {
+        const gameDoc = await addDoc(collection(db, "games"), {
+          name,
+          players: newSelectedFriends.map((friend) => friend.value),
+        });
+        const roundsCollection = collection(gameDoc, "rounds");
+        let pointsObject: { [key: string]: number } = {};
+        newSelectedFriends.forEach(async (friend, index) => {
+          // const newDoc = await setDoc(doc(roundsCollection,`round-${index}`),{
+          //   ...newSelectedFriends.map(friend=>({playerId:friend.value, points:0}))
+          // })
+          pointsObject[friend.value] = 0;
+        });
+        newSelectedFriends.forEach(async (friend, index) => {
+          const newDoc = await setDoc(
+            doc(roundsCollection, `round-${index}`),
+            pointsObject
+          );
+        });
+
+        console.log(pointsObject);
+
+        // rounds: newSelectedFriends.map((friend, index) => ({
+        //   round_num: index + 1,
+        //   points: newSelectedFriends.map((friend) => ({
+        //     user: friend.value,
+        //     points: 0,
+        //   })),
+        // })),
+      } catch (err) {
+        console.error(err);
+      }
     }
   };
   return (

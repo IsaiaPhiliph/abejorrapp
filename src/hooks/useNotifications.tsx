@@ -13,8 +13,8 @@ export default function useNotifications() {
   const dispatch = useAppDispatch();
   const currentUser = useAppSelector(selectCurrentUser);
   useEffect(() => {
-    if (currentUser && currentUser.email) {
-      const userDoc = doc(db, "users", currentUser.email);
+    if (currentUser && currentUser.displayName) {
+      const userDoc = doc(db, "users", currentUser.displayName);
       const notificationsCollection = collection(userDoc, "notifications");
 
       const unsuscribe = onSnapshot(notificationsCollection, (snap) => {

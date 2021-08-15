@@ -28,26 +28,32 @@ export default function GamesScreen() {
   const games = useAppSelector(selectGames);
   return (
     <List className={classes.root}>
-      {games.map((game) => (
-        <Link
-          color="textPrimary"
-          underline="none"
-          component={RLink}
-          to={`/game/${game.id}`}
-        >
-          <ListItem>
-            <ListItemAvatar>
-              <Avatar>
-                <GamepadIcon />
-              </Avatar>
-            </ListItemAvatar>
-            <ListItemText
-              primary={game.data.name}
-              secondary={game.data.status || game.data.players.join(", ")}
-            />
-          </ListItem>
-        </Link>
-      ))}
+      {games.map((game) => {
+        if (!game.data) return;
+        return (
+          <Link
+            color="textPrimary"
+            underline="none"
+            component={RLink}
+            to={`/game/${game.id}`}
+          >
+            <ListItem>
+              <ListItemAvatar>
+                <Avatar>
+                  <GamepadIcon />
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText
+                primary={game.data.name}
+                secondary={
+                  game.data.status ||
+                  game.data.players.map((player) => player.username).join(", ")
+                }
+              />
+            </ListItem>
+          </Link>
+        );
+      })}
     </List>
   );
 }
