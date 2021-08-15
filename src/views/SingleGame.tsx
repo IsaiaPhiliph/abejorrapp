@@ -1,29 +1,20 @@
 import {
-  Button,
   Card,
   createStyles,
   Grid,
-  IconButton,
   makeStyles,
   TextField,
   Typography,
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { selectGames, setRounds } from "../features/games/gamesSlice";
 import { theme } from "../theme";
 import Divider from "@material-ui/core/Divider";
-import CheckIcon from "@material-ui/icons/Check";
 import { useTranslation } from "react-i18next";
 import { selectCurrentUser } from "../features/auth/authSlice";
-import {
-  collection,
-  doc,
-  FieldPath,
-  onSnapshot,
-  updateDoc,
-} from "firebase/firestore";
+import { collection, doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
 
 const useStyles = makeStyles((theme) =>
@@ -34,21 +25,13 @@ const useStyles = makeStyles((theme) =>
   })
 );
 
-const encodeKey = (key: string) => {
-  return key.replaceAll(".", "_");
-};
-
-const decodeKey = (key: string) => {
-  return key.replaceAll("_", ".");
-};
-
 export default function SingleGame() {
   const { id } = useParams<{ id: string }>();
   const dispatch = useAppDispatch();
+  const location = useLocation();
   const { t } = useTranslation();
   const classes = useStyles();
   const currentUser = useAppSelector(selectCurrentUser);
-  const currentUserEmail = currentUser?.email;
   const games = useAppSelector(selectGames);
   const currentGame = games.find((game) => game.id === id);
   const [gameScore, setGameScore] = useState<{
@@ -66,10 +49,11 @@ export default function SingleGame() {
       });
     }
   };
-
+  // @ts-ignore
+  location.name = currentGame?.data.name || t("game");
   useEffect(() => {
     let totalPoints: { [key: string]: number } = {};
-    currentGame?.data?.rounds?.map((round) => {
+    currentGame?.data?.rounds?.forEach((round) => {
       currentGame.data.players.forEach((player) => {
         let userPoints = round.data[player.username];
         if (!totalPoints[player.username]) {
@@ -82,7 +66,7 @@ export default function SingleGame() {
     setGameScore(totalPoints);
   }, [currentGame]);
   useEffect(() => {
-    if (currentGame) {
+    if (currentGame?.id) {
       const unsuscribe = onSnapshot(
         collection(doc(db, "games", currentGame.id), "rounds"),
         (snap) => {
@@ -104,21 +88,42 @@ export default function SingleGame() {
         <Grid item>
           <Card>
             <Grid container>
-              <Grid item style={{ padding: theme.spacing(2), width: "100%" }}>
-                <Typography variant="h6">{t("score")}</Typography>
+              <Grid
+                item
+                style={{
+                  padding: theme.spacing(2),
+                  background: theme.palette.primary.dark,
+                  width: "100%",
+                }}
+              >
+                <Typography
+                  style={{ color: theme.palette.common.white }}
+                  variant="h6"
+                >
+                  {t("score")}
+                </Typography>
               </Grid>
               <Grid container direction="column">
                 <Divider />
                 {gameScore &&
                   Object.keys(gameScore).map((key) => {
                     return (
-                      <Grid
-                        item
-                        style={{ padding: theme.spacing(1), width: "100%" }}
-                      >
-                        <Typography>{key}</Typography>
-                        <Typography>{gameScore[key]}</Typography>
-                      </Grid>
+                      <>
+                        <Grid
+                          item
+                          container
+                          justifyContent="space-between"
+                          style={{ padding: theme.spacing(1), width: "100%" }}
+                        >
+                          <Grid item>
+                            <Typography>{key}</Typography>
+                          </Grid>
+                          <Grid item>
+                            <Typography>{gameScore[key]}</Typography>
+                          </Grid>
+                        </Grid>
+                        <Divider />
+                      </>
                     );
                   })}
               </Grid>
@@ -128,8 +133,15 @@ export default function SingleGame() {
         {currentGame?.data?.rounds?.map((round, roundIndex) => (
           <Grid item>
             <Card>
-              <Grid item style={{ padding: theme.spacing(2), width: "100%" }}>
-                <Typography variant={"h6"}>
+              <Grid
+                item
+                style={{
+                  padding: theme.spacing(2),
+                  width: "100%",
+                  background: theme.palette.primary.light,
+                }}
+              >
+                <Typography color="textSecondary" variant={"h6"}>
                   {t("round") + (roundIndex + 1)}
                 </Typography>
               </Grid>
@@ -154,8 +166,8 @@ export default function SingleGame() {
                             onFocus={(event) => {
                               event.target.select();
                             }}
-                            type="number"
-                            style={{ width: "50px" }}
+                            type="tel"
+                            style={{ width: "47px" }}
                             size="small"
                             variant="outlined"
                             value={round.data[currentUser.displayName]}

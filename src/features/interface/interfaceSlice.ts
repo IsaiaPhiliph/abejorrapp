@@ -6,6 +6,7 @@ export interface InterfaceState {
   drawer: boolean;
   userMenuOpen: boolean;
   notificationsOpen: boolean;
+  
 }
 
 const initialState: InterfaceState = {

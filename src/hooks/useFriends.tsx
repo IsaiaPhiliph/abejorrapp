@@ -4,10 +4,6 @@ import { useTranslation } from "react-i18next";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { selectCurrentUser } from "../features/auth/authSlice";
 import { Friend, setFriends } from "../features/friends/friendsSlice";
-import {
-  setNotifications,
-  Notification,
-} from "../features/notifications/notificationsSlice";
 import { selectUsers } from "../features/users/usersSlice";
 
 import { db } from "../firebase";
@@ -41,6 +37,6 @@ export default function useFriends() {
       });
       return () => unsuscribe();
     }
-  }, [dispatch, currentUser, users]);
+  }, [dispatch, currentUser, users, t]);
   return;
 }

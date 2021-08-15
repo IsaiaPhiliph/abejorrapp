@@ -1,5 +1,4 @@
 import { collection, onSnapshot } from "firebase/firestore";
-import React from "react";
 import { useEffect } from "react";
 import { useAppDispatch } from "../app/hooks";
 import { AbUser, setUsers } from "../features/users/usersSlice";

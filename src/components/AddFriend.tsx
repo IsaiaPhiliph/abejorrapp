@@ -8,13 +8,14 @@ import {
   Theme,
 } from "@material-ui/core";
 import { Autocomplete } from "@material-ui/lab";
-import { collection, doc, setDoc, updateDoc } from "firebase/firestore";
+import { collection, doc, setDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useAppSelector } from "../app/hooks";
 import { selectCurrentUser } from "../features/auth/authSlice";
 import { selectUsers } from "../features/users/usersSlice";
 import { db } from "../firebase";
+import { theme } from "../theme";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -106,7 +107,10 @@ export default function AddFriend() {
                 <Button
                   type="submit"
                   fullWidth
-                  color="secondary"
+                  style={{
+                    background: theme.palette.primary.dark,
+                    color: theme.palette.primary.contrastText,
+                  }}
                   variant="contained"
                 >
                   {t("addFriend")}

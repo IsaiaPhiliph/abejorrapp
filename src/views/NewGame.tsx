@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Switch from "@material-ui/core/Switch";
 import { Button, Card, Grid, makeStyles, TextField } from "@material-ui/core";
 import { useTranslation } from "react-i18next";
 import { Autocomplete } from "@material-ui/lab";
@@ -9,6 +7,8 @@ import { selectFriends } from "../features/friends/friendsSlice";
 import { collection, doc, setDoc, addDoc } from "firebase/firestore";
 import { db } from "../firebase";
 import { selectCurrentUser } from "../features/auth/authSlice";
+import { theme } from "../theme";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -20,13 +20,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function NewGame() {
-  const [online, setOnline] = useState(true);
+  const [, setOnline] = useState(true);
   const friends = useAppSelector(selectFriends);
   const currentUser = useAppSelector(selectCurrentUser);
   const [name, setName] = useState("");
+  const history = useHistory();
   const [selectedFriends, setSelectedFriends] = useState<
     { value: string; label: string }[]
   >([]);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement>,
     checked: boolean
@@ -62,7 +64,7 @@ export default function NewGame() {
       console.log(newSelectedFriends);
       try {
         const gameDoc = await addDoc(collection(db, "games"), {
-          name,
+          name: name || "Partida sin nombre",
           players: newSelectedFriends.map((friend) => friend.value),
         });
         const roundsCollection = collection(gameDoc, "rounds");
@@ -74,14 +76,11 @@ export default function NewGame() {
           pointsObject[friend.value] = 0;
         });
         newSelectedFriends.forEach(async (friend, index) => {
-          const newDoc = await setDoc(
-            doc(roundsCollection, `round-${index}`),
-            pointsObject
-          );
+          await setDoc(doc(roundsCollection, `round-${index}`), pointsObject);
         });
 
         console.log(pointsObject);
-
+        history.push(`/game/${gameDoc.id}`);
         // rounds: newSelectedFriends.map((friend, index) => ({
         //   round_num: index + 1,
         //   points: newSelectedFriends.map((friend) => ({
@@ -153,7 +152,10 @@ export default function NewGame() {
             <Button
               onClick={handleCreateGame}
               fullWidth
-              color="secondary"
+              style={{
+                background: theme.palette.primary.dark,
+                color: theme.palette.primary.contrastText,
+              }}
               variant="contained"
             >
               {t("next")}

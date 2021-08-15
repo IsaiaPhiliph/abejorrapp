@@ -28,6 +28,7 @@
       "noNotifications": "You don't have any notification",
       "selectFriends": "Choose participants",
       "games": "Games",
+      "game": "Game",
       "round": "Round ",
       "noUsername": "Abejorro",
       "score":"Score"
@@ -50,8 +51,8 @@
       "signUpError": "Ups, hubo un error al crear la cuenta, revisa los datos introducidos!",
       "loginError": "Ups, hubo un error al iniciar sesión, revisa los datos introducidos!",
       "username": "Nombre de usuario",
-      "gameName": "Nombre del juego",
-      "newGame": "Crear juego",
+      "gameName": "Nombre de la partida",
+      "newGame": "Crear partida",
       "next": "Siguiente",
       "addFriend": "Añadir amigo",
       "pickAUser": "Selecciona un usuario",
@@ -61,9 +62,10 @@
       "noNotifications": "No tienes ninguna notificación",
       "selectFriends": "Elige los participantes",
       "games": "Partidas",
+      "game": "Partida",
       "round": "Ronda ",
       "noUsername": "Abejorro",
-      "score":"Puntuación"
+      "score":"Puntuación total"
     }
   }
 }

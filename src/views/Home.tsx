@@ -35,7 +35,7 @@ export default function Home() {
           <Route path="/game/:id">
             <SingleGame />
           </Route>
-          <Route exact path={"/"}>
+          <Route path={"/"}>
             <HomeScreen />
           </Route>
         </Switch>

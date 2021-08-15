@@ -13,7 +13,7 @@ import { useTranslation } from "react-i18next";
 import { Link as RLink } from "react-router-dom";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { auth, db } from "../firebase";
-import { addDoc, collection, doc, setDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore";
 import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../features/auth/authSlice";
 

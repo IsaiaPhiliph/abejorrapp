@@ -23,8 +23,6 @@ import {
   setNotificationsOpen,
   setUserMenuOpen,
 } from "../features/interface/interfaceSlice";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import { theme } from "../theme";
 import { auth, db } from "../firebase";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import { AccountCircle } from "@material-ui/icons";
@@ -32,7 +30,7 @@ import { selectNotifications } from "../features/notifications/notificationsSlic
 import CheckCircleOutlineIcon from "@material-ui/icons/CheckCircleOutline";
 import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 import { collection, deleteDoc, doc, setDoc } from "firebase/firestore";
-
+import { useLocation } from "react-router-dom";
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
@@ -177,6 +175,9 @@ export default function AbAppBar() {
     </Menu>
   );
 
+  const location = useLocation();
+  console.log(location);
+
   return (
     <div>
       <AppBar position="fixed">
@@ -191,7 +192,11 @@ export default function AbAppBar() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            {t("home")}
+            {location.pathname === "/" && t("home")}
+            {location.pathname === "/new-game" && t("newGame")}
+            {location.pathname === "/add-friend" && t("addFriend")}
+            {location.pathname === "/games" && t("games")}
+            {location.pathname.includes("/game/") && "Partida"}
           </Typography>
           {currentUser ? (
             <>
