@@ -28,12 +28,12 @@
     "typescript": "~4.1.5"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "buildAndTest": "react-scripts build && serve -s build -p 6000",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
-    ,"buildAndDeploy" : "react-scripts build && firebase deploy"
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "buildAndTest": "react-app-rewired build && serve -s build -p 6000",
+    "test": "react-app-rewired test",
+    "eject": "react-scripts eject",
+    "buildAndDeploy": "react-app-rewired build && firebase deploy"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -49,5 +49,9 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "react-app-rewired": "^2.1.8",
+    "workbox-webpack-plugin": "^6.2.4"
   }
 }

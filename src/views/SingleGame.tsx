@@ -25,8 +25,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import abejaTramposa from "../assets/img/abeja-tramposa.png";
 import abeja from "../assets/img/abeja1.png";
-import gusano from "../assets/img/gusano.png";
-import mariposa from "../assets/img/mariposa.png";
+import normal from "../assets/img/normal.png";
 import HelpOutlineIcon from "@material-ui/icons/HelpOutline";
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -140,6 +139,12 @@ export default function SingleGame() {
               direction="column"
               style={{ width: "min-content" }}
             >
+              <Typography
+                style={{ padding: theme.spacing(1) }}
+                variant="caption"
+              >
+                Abejorro tramposo
+              </Typography>
               <img
                 style={{ width: "100px" }}
                 src={abejaTramposa}
@@ -158,6 +163,12 @@ export default function SingleGame() {
               direction="column"
               style={{ width: "min-content" }}
             >
+              <Typography
+                style={{ padding: theme.spacing(1) }}
+                variant="caption"
+              >
+                Cartas de acción
+              </Typography>
               <img
                 style={{ width: "100px" }}
                 src={abeja}
@@ -167,7 +178,7 @@ export default function SingleGame() {
                 style={{ padding: theme.spacing(1) }}
                 variant="caption"
               >
-                No sé
+                5 Puntos
               </Typography>
             </Grid>
             <Grid
@@ -176,34 +187,22 @@ export default function SingleGame() {
               direction="column"
               style={{ width: "min-content" }}
             >
-              <img
-                style={{ width: "100px" }}
-                src={gusano}
-                alt="abeja-tramposa"
-              />
               <Typography
                 style={{ padding: theme.spacing(1) }}
                 variant="caption"
               >
-                No sé
+                Cartas Normales
               </Typography>
-            </Grid>
-            <Grid
-              item
-              container
-              direction="column"
-              style={{ width: "min-content" }}
-            >
               <img
                 style={{ width: "100px" }}
-                src={mariposa}
+                src={normal}
                 alt="abeja-tramposa"
               />
               <Typography
                 style={{ padding: theme.spacing(1) }}
                 variant="caption"
               >
-                No sé
+                1 Punto
               </Typography>
             </Grid>
           </Grid>
