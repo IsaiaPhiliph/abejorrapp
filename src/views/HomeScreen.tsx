@@ -53,28 +53,6 @@ export default function HomeScreen() {
                   }}
                   variant="h6"
                 >
-                  Partidas
-                </Typography>
-              </Grid>
-              <Divider />
-              <Grid item>
-                <GamesList />
-              </Grid>
-            </Grid>
-          </Card>
-        </Grid>
-        <Grid item style={{ width: "100%", padding: theme.spacing(2) }}>
-          <Card>
-            <Grid container direction="column">
-              <Grid item>
-                <Typography
-                  style={{
-                    padding: theme.spacing(2),
-                    background: theme.palette.primary.dark,
-                    color: theme.palette.primary.contrastText,
-                  }}
-                  variant="h6"
-                >
                   Amigos
                 </Typography>
               </Grid>
@@ -106,6 +84,28 @@ export default function HomeScreen() {
                     No tienes amigos
                   </Typography>
                 )}
+              </Grid>
+            </Grid>
+          </Card>
+        </Grid>
+        <Grid item style={{ width: "100%", padding: theme.spacing(2) }}>
+          <Card>
+            <Grid container direction="column">
+              <Grid item>
+                <Typography
+                  style={{
+                    padding: theme.spacing(2),
+                    background: theme.palette.primary.dark,
+                    color: theme.palette.primary.contrastText,
+                  }}
+                  variant="h6"
+                >
+                  Partidas
+                </Typography>
+              </Grid>
+              <Divider />
+              <Grid item>
+                <GamesList />
               </Grid>
             </Grid>
           </Card>
